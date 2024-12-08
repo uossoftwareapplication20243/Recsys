@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from .params import create_combined_text
+from params import create_combined_text
 
 def Sampling(pos_train_data, item_num, neg_ratio, interacted_items, train_text_dict,index_to_champion_name,sampling_sift_pos,mode):
     neg_candidates = np.arange(item_num)

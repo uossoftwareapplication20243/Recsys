@@ -109,6 +109,7 @@ def load_data(csv_file_path,winrate_mode = True,testcutting=3000):
     champion_key_to_index = {key: idx for idx, key in enumerate(champion_keys)}  # Map champion key to fixed index (0 to 167)
     index_to_champion_name = {champion_key_to_index[key]:name for name, key in champion_name_to_key.items()}
 
+    print(champion_key_to_index)
     # Map user IDs to indices
     user_id_to_index = {user_id: idx for idx, user_id in enumerate(user_ids)}
     #print(len(user_id_to_index))
@@ -155,8 +156,14 @@ def load_data(csv_file_path,winrate_mode = True,testcutting=3000):
         train_mat[x[0], x[1]] = 1.0
 
     test_ground_truth_list = [[] for _ in range(len(user_id_to_index))]
+    user_set = set()
+
+    # test_data에서 사용자 ID를 집합에 추가
+    for (u, i) in test_data:
+        user_set.add(u)
     for (u, i) in test_data:
         test_ground_truth_list[u].append(i)
+    print(len(user_set), "유저")
 
     # Construct degree matrix for graphmf
     items_D = np.sum(train_mat, axis=0).reshape(-1)
